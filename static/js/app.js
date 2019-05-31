@@ -13,14 +13,43 @@ filterbtn.on("click", function(){
 
     d3.event.preventDefault();
 
+    //clear previous table results
+    var currentData = d3.selectAll("td");
+    currentData.remove();
+    var currentRows = d3.selectAll("tr");
+    currentRows.remove();
+
     //select the search term 
     var searchDate = d3.select(".form-control").node().value;
+    var searchState = d3.select("#state").node().value;
+    console.log(searchDate);
 
-    //apply search filter to data
-    function selectIncidents(report){
-        return report.datetime = searchDate;
+    //function to apply date search filter to data
+    function selectDateIncidents(report){
+        return report.datetime == searchDate;
     }
-    var incidents = data.filter(selectIncidents);
+
+    //function to apply state search filter to data
+    function selectStateIncidents(report){
+        return report.state == searchState;
+    }
+
+    function selectStateIncidents(report){
+        return report.state == searchState;
+    }
+
+    if (searchDate != ''){
+        var incidents = tableData.filter(selectDateIncidents);
+        
+        if (searchState != ''){
+            incidents = incidents.filter(selectStateIncidents);
+        };
+        console.log(incidents);
+    } else if(searchState != ''){
+        incidents = tableData.filter(selectStateIncidents);
+    };
+    
+
     //add search results to page
     var tbody = d3.select("tbody");
 
@@ -31,6 +60,16 @@ filterbtn.on("click", function(){
         });
         
     });
+
+    //clear variables
+    incidents = [];
+
+    //remove current 
+    document.getElementById("datetime").value = '';
+
+    //remove current 
+    document.getElementById("state").value = '';
+
 });
 
 
