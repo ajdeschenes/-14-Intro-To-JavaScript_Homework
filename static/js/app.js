@@ -13,14 +13,12 @@ filterbtn.on("click", function(){
 
     d3.event.preventDefault();
 
-    //clear previous table results
-    var currentData = d3.selectAll("td");
+    // code to clear previous table results
+    var currentData = d3.select("tbody").selectAll("tr");
     currentData.remove();
-    var currentRows = d3.selectAll("tr");
-    currentRows.remove();
-
+    
     //select the search term 
-    var searchDate = d3.select(".form-control").node().value;
+    var searchDate = d3.select("#datetime").node().value;
     var searchState = d3.select("#state").node().value;
     console.log(searchDate);
 
@@ -47,6 +45,8 @@ filterbtn.on("click", function(){
         console.log(incidents);
     } else if(searchState != ''){
         incidents = tableData.filter(selectStateIncidents);
+    } else{
+        incidents = tableData;
     };
     
 
@@ -64,6 +64,8 @@ filterbtn.on("click", function(){
     //clear variables
     incidents = [];
 
+    
+    
     //remove current 
     document.getElementById("datetime").value = '';
 
